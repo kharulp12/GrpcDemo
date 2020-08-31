@@ -13,7 +13,7 @@ This step will make sure generating java code from proto file present at [todo.p
 
 ## Issues and solutions 
 
-### After maven generate source not able to access generated classes
+### After maven generate-source, not able to access generated classes
 Check if you have added target path into your build path in eclipse. Add folder containing package in your build path
 
 ### Generated code has error related to javax not found or must override superclass method
