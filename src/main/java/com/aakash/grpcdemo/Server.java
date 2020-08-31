@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aakash.grpcdemo.generated.Todo.TodoItem;
+import com.aakash.grpcdemo.generated.Todo.TodoItems;
 import com.aakash.grpcdemo.generated.TodoServiceGrpc.TodoServiceImplBase;
 
 import io.grpc.ServerBuilder;
@@ -55,6 +56,33 @@ public class Server {
 			 System.out.println("[server] : sent reponse");
 
 		}
+		
+		@Override
+		public void getAllSync(com.aakash.grpcdemo.generated.Todo.Void request, StreamObserver<TodoItems> responseObserver) {
+			System.out.println("[server] : get all sync requested");
+	    	populateAll(responseObserver);
+	    	System.out.println("[server] : get all sync returned");
+	    }
+
+		@Override
+	    public void getAllAsync(com.aakash.grpcdemo.generated.Todo.Void request, StreamObserver<TodoItem> responseObserver) {
+	    	System.out.println("[server] : get all async requested");
+	    	populateAllAsync(responseObserver);
+	    	System.out.println("[server] : get all async returned");
+	    }
+
+		private void populateAllAsync(StreamObserver<TodoItem> responseObserver) {
+			items.forEach(responseObserver::onNext);
+			responseObserver.onCompleted();
+		}
+
+		private void populateAll(StreamObserver<TodoItems> responseObserver) {
+			TodoItems.Builder builder = TodoItems.newBuilder();
+			items.forEach(builder::addItems);
+			responseObserver.onNext(builder.build());
+			responseObserver.onCompleted();
+		}
+
 		
 	}
 }

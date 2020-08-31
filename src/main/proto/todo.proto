@@ -4,8 +4,19 @@ package com.aakash.grpcdemo.generated;
 
 service TodoService {
 	rpc createTodo(TodoItem) returns (TodoItem) {}
+	
+	rpc getAllSync(Void) returns (TodoItems) {}
+	
+	rpc getAllAsync(Void) returns (stream TodoItem) {}
 }
+
+message Void {
+};
 
 message TodoItem {
 	string todo = 1;
 };
+
+message TodoItems {
+	repeated TodoItem items = 1;
+}
