@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package com.aakash.grpcdemo.generated;
+
+service TodoService {
+	rpc createTodo(TodoItem) returns (TodoItem) {}
+}
+
+message TodoItem {
+	string todo = 1;
+};
